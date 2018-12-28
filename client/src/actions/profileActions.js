@@ -3,7 +3,8 @@ import {
   GET_PROFILE,
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
-  GET_ERRORS
+  GET_ERRORS,
+  SET_CURRENT_USER
 } from "./types";
 
 // Get current profile
@@ -36,6 +37,39 @@ export const createProfile = (profileData, history) => dispatch => {
         payload: err.response.data
       })
     );
+};
+
+// Add experience
+export const addExperience = (expData, history) => dispatch => {
+  axios
+    .post("/api/profile/experience", expData)
+    .then(response => history.push("/dashboard"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Delete account & profile
+export const deleteAccount = () => dispatch => {
+  if (window.confirm("Are You Sure? This can NOT be undone!")) {
+    axios
+      .delete("/api/profile")
+      .then(res => {
+        dispatch({
+          type: SET_CURRENT_USER,
+          payload: {}
+        });
+      })
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
 };
 
 // Profile loading
