@@ -247,6 +247,7 @@ router.delete(
 
     Profile.findOne({ user: req.user.id })
       .then(profile => {
+        console.log("Found user");
         // Get remove index
         const removeIndex = profile.experience
           .map(item => item.id)
@@ -254,11 +255,13 @@ router.delete(
 
         // Splice out of array
         if (removeIndex > -1) {
+          console.log("We got this far");
           profile.experience.splice(removeIndex, 1);
 
           // Save profile
           profile.save().then(profile => res.json(profile));
         } else {
+          console.log("No education with this id");
           res.status(404).json({ error: "No education found with this ID" });
         }
       })
