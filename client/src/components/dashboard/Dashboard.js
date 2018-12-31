@@ -6,7 +6,6 @@ import Spinner from "../common/Spinner";
 import { Link } from "react-router-dom";
 import ProfileActions from "./ProfileActions";
 import Experience from "./Experience";
-import Educaiton from "./Education";
 import Education from "./Education";
 
 class Dashboard extends Component {

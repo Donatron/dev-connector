@@ -1,39 +1,38 @@
 import {
-  GET_PROFILE,
-  GET_PROFILES,
-  PROFILE_LOADING,
-  CLEAR_CURRENT_PROFILE
+  ADD_POST,
+  GET_POSTS,
+  POST_LOADING,
+  DELETE_POST
 } from "../actions/types";
 
 const initialState = {
-  profile: null,
-  profiles: null,
+  posts: [],
+  post: {},
   loading: false
 };
 
 export default function(state = initialState, action) {
   switch (action.type) {
-    case PROFILE_LOADING:
+    case POST_LOADING:
       return {
         ...state,
         loading: true
       };
-    case GET_PROFILE:
+    case GET_POSTS:
       return {
         ...state,
-        profile: action.payload,
+        posts: action.payload,
         loading: false
       };
-    case GET_PROFILES:
+    case ADD_POST:
       return {
         ...state,
-        profiles: action.payload,
-        loading: false
+        posts: [action.payload, ...state.posts]
       };
-    case CLEAR_CURRENT_PROFILE:
+    case DELETE_POST:
       return {
         ...state,
-        profile: null
+        posts: state.posts.filter(post => post._id !== action.payload)
       };
     default:
       return state;
