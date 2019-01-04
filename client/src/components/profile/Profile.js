@@ -50,9 +50,7 @@ class Profile extends Component {
             <ProfileGithub username={profile.githubusername} />
           ) : null}
 
-          <p>
-            {profile.social ? <p>{profile.social.twitter}</p> : "Anti-social"}
-          </p>
+          <p>{profile.social ? <p>{profile.social.twitter}</p> : ""}</p>
         </div>
       );
     }
