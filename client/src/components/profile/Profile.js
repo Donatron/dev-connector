@@ -49,8 +49,6 @@ class Profile extends Component {
           {profile.githubusername ? (
             <ProfileGithub username={profile.githubusername} />
           ) : null}
-
-          <p>{profile.social ? <p>{profile.social.twitter}</p> : ""}</p>
         </div>
       );
     }

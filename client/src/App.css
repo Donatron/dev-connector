@@ -1,3 +1,12 @@
+/* .App {
+  min-height: 100vh;
+  position: relative;
+} */
+
+#main-container {
+  margin-bottom: 100px;
+}
+
 img {
   width: 100%;
 }
@@ -36,4 +45,11 @@ img {
 
 .form-control::placeholder {
   color: #bbb !important;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
