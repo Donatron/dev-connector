@@ -166,6 +166,27 @@ router.post(
   }
 );
 
+// @route   POST api/profile/change-password
+// @desc    Add education to profile
+// @access  Private
+router.post(
+  "/change-password",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { errors, isValid } = validateEducationInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
+
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      res.json(profile);
+    });
+  }
+);
+
 // @route   POST api/profile/experience
 // @desc    Add experience to profile
 // @access  Private
