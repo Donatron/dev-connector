@@ -7,6 +7,7 @@ const passport = require("passport");
 const validateProfileInput = require("../../validation/profile");
 const validateExperienceInput = require("../../validation/experience");
 const validateEducationInput = require("../../validation/education");
+const validatePasswordChange = require("../../validation/password");
 
 // Load Profile model
 const Profile = require("../../models/Profile");
@@ -167,13 +168,14 @@ router.post(
 );
 
 // @route   POST api/profile/change-password
-// @desc    Add education to profile
+// @desc    Change Password
 // @access  Private
 router.post(
   "/change-password",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { errors, isValid } = validateEducationInput(req.body);
+    const { errors, isValid } = validatePasswordChange(req.body);
+    console.log(errors);
 
     // Check validation
     if (!isValid) {
@@ -181,9 +183,9 @@ router.post(
       return res.status(400).json(errors);
     }
 
-    Profile.findOne({ user: req.user.id }).then(profile => {
-      res.json(profile);
-    });
+    // Profile.findOne({ user: req.user.id }).then(profile => {
+    //   res.json(profile);
+    // });
   }
 );
 

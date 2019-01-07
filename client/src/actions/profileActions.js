@@ -5,7 +5,8 @@ import {
   PROFILE_LOADING,
   CLEAR_CURRENT_PROFILE,
   GET_ERRORS,
-  SET_CURRENT_USER
+  SET_CURRENT_USER,
+  CHANGE_PASSWORD
 } from "./types";
 
 // Get current profile
@@ -110,6 +111,24 @@ export const deleteEducation = id => dispatch => {
     .then(res =>
       dispatch({
         type: GET_PROFILE,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+// Change Password
+export const changePassword = () => dispatch => {
+  axios
+    .post("/api/profile/change-password")
+    .then(res =>
+      dispatch({
+        type: CHANGE_PASSWORD,
         payload: res.data
       })
     )
