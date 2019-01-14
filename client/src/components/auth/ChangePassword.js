@@ -81,7 +81,7 @@ class ChangePassword extends Component {
                 <TextFieldGroup
                   placeholder="Confirm New Password"
                   name="newPasswordConfirm"
-                  type="text"
+                  type="password"
                   value={this.state.newPasswordConfirm}
                   onChange={this.onChange}
                   error={errors.newPasswordConfirm}

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
 const passport = require("passport");
+const bcrypt = require("bcryptjs");
 
 // Load Validation
 const validateProfileInput = require("../../validation/profile");
@@ -175,17 +175,38 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { errors, isValid } = validatePasswordChange(req.body);
-    console.log(errors);
 
     // Check validation
     if (!isValid) {
       // Return any errors with 400 status
-      return res.status(400).json(errors);
+      return res.status(400).json(req.body);
     }
 
-    // Profile.findOne({ user: req.user.id }).then(profile => {
-    //   res.json(profile);
-    // });
+    // Declare variables from req.body
+    const currentPassword = req.body.currentPassword;
+    const newPassword = req.body.newPassword;
+
+    User.findOne({ _id: req.user.id }).then(user => {
+      // TODO: Check that current password matches saved password
+      bcrypt.compare(currentPassword, user.password).then(isMatch => {
+        if (isMatch) {
+          // TODO: Create new password hash
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(newPassword, salt, (err, hash) => {
+              if (err) {
+                throw err;
+              }
+              user.password = hash;
+              user.save().then(response => {
+                res.json(req.body);
+              });
+            });
+          });
+        } else {
+          res.json({ response: "No match to be found" });
+        }
+      });
+    });
   }
 );
 
