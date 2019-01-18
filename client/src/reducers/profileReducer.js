@@ -39,6 +39,7 @@ export default function(state = initialState, action) {
     case CHANGE_PASSWORD:
       return {
         ...state,
+        success: true,
         profile: action.payload
       };
     default:

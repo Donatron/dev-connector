@@ -4,10 +4,6 @@ const isEmpty = require("./is-empty");
 module.exports = function validatePasswordChange(data) {
   let errors = {};
 
-  // console.log(`Current: ${data.currentPassword}`);
-  // console.log(`New: ${data.newPassword}`);
-  // console.log(`Confirm: ${data.newPasswordConfirm}`);
-
   data.currentPassword = !isEmpty(data.currentPassword)
     ? data.currentPassword
     : (data.currentPassword = "");
@@ -32,8 +28,11 @@ module.exports = function validatePasswordChange(data) {
 
   if (!Validator.equals(data.newPassword, data.newPasswordConfirm)) {
     errors.newPasswordConfirm = "Passwords must match";
-    console.log("Passwords don'\t match");
   }
+
+  console.log(`Current Password: ${errors.currentPassword}`);
+  console.log(`New Password: ${errors.newPassword}`);
+  console.log(`Confirm New Password: ${errors.newPasswordConfirm}`);
 
   return {
     errors,

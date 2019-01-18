@@ -9,6 +9,8 @@ import {
   CHANGE_PASSWORD
 } from "./types";
 
+import { clearErrors } from "./postActions";
+
 // Get current profile
 export const getCurrentProfile = () => dispatch => {
   dispatch(setProfileLoading());
@@ -123,9 +125,12 @@ export const deleteEducation = id => dispatch => {
 };
 
 // Change Password
-export const changePassword = () => dispatch => {
+// TODO: Push history to dashboard
+// TODO: Pop up "Success" message
+export const changePassword = (passwordData, history) => dispatch => {
+  dispatch(clearErrors());
   axios
-    .post("/api/profile/change-password")
+    .post("/api/profile/change-password", passwordData)
     .then(res =>
       dispatch({
         type: CHANGE_PASSWORD,

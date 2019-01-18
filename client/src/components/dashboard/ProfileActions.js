@@ -11,11 +11,11 @@ const ProfileActions = () => {
         <i className="fab fa-black-tie text-info mr-1" />
         Add Experience
       </Link>
-      <Link to="add-education" className="btn btn-light">
+      <Link to="/add-education" className="btn btn-light">
         <i className="fas fa-graduation-cap text-info mr-1" />
         Add Education
       </Link>
-      <Link to="change-password" className="btn btn-light">
+      <Link to="/change-password" className="btn btn-light">
         <i className="fas fa-key text-info mr-1 pull-right" />
         Change Password
       </Link>

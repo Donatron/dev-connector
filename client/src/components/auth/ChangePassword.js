@@ -14,7 +14,9 @@ class ChangePassword extends Component {
       currentPassword: "",
       newPassword: "",
       newPasswordConfirm: "",
-      errors: {}
+      errors: {},
+      success: false,
+      profile: {}
     };
 
     this.onChange = this.onChange.bind(this);
@@ -24,6 +26,7 @@ class ChangePassword extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
+      this.setState({ success: nextProps.profile.success });
     }
   }
 
@@ -33,6 +36,8 @@ class ChangePassword extends Component {
 
   onSubmit(e) {
     e.preventDefault();
+
+    this.setState({ success: false });
 
     const passwordData = {
       currentPassword: this.state.currentPassword,
@@ -44,7 +49,7 @@ class ChangePassword extends Component {
   }
 
   render() {
-    const { errors } = this.state;
+    const { errors, success } = this.state;
 
     return (
       <div className="changePassword">
@@ -66,7 +71,6 @@ class ChangePassword extends Component {
                   error={errors.currentPassword}
                   info="Enter current password"
                 />
-                <p>{this.state.errors.currentPassword}</p>
 
                 <TextFieldGroup
                   placeholder="New Password"
@@ -89,6 +93,15 @@ class ChangePassword extends Component {
                 />
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
+              {// TODO: Clear success message on form resubmission
+
+              success ? (
+                <div className="text-center mt-3 text-info">
+                  Password changed successfully
+                </div>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
@@ -100,12 +113,15 @@ class ChangePassword extends Component {
 ChangePassword.propTypes = {
   changePassword: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  errors: state.errors
+  errors: state.errors,
+  success: state.success,
+  profile: state.profile
 });
 
 export default connect(

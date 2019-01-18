@@ -179,7 +179,7 @@ router.post(
     // Check validation
     if (!isValid) {
       // Return any errors with 400 status
-      return res.status(400).json(req.body);
+      return res.status(400).json(errors);
     }
 
     // Declare variables from req.body
@@ -187,10 +187,10 @@ router.post(
     const newPassword = req.body.newPassword;
 
     User.findOne({ _id: req.user.id }).then(user => {
-      // TODO: Check that current password matches saved password
+      // Check that current password matches saved password
       bcrypt.compare(currentPassword, user.password).then(isMatch => {
         if (isMatch) {
-          // TODO: Create new password hash
+          // Create new password hash
           bcrypt.genSalt(10, (err, salt) => {
             bcrypt.hash(newPassword, salt, (err, hash) => {
               if (err) {
@@ -203,7 +203,8 @@ router.post(
             });
           });
         } else {
-          res.json({ response: "No match to be found" });
+          errors.currentPassword = "Password incorrect";
+          return res.status(400).json(errors);
         }
       });
     });
